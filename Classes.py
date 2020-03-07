@@ -84,7 +84,7 @@ class TimerManager:
             if timer.name == timerName:
                 print('\nError: timer with name', timerName, 'already exists')
                 break
-        self.timers.append(Timer(timerName, 0, 0))
+        self.timers.append(Timer(timerName, timeElapsed, initialTime))
         if len(timerName) > self.longestNameLen:
             self.longestNameLen = len(timerName)
 
@@ -103,15 +103,31 @@ class TimerManager:
     def getTimers(self):
         return self.timers
 
+
     def saveData(self):
         data = open('SaveData.txt', 'w')
         for timer in self.timers:
             string = timer.name + ',' + str(timer.timeElapsed) + ',' + str(timer.initialTime) + '\n'
-            print(string)
             data.write(string)
         data.close()
 
 
+    def loadData(self):
+        try:
+            data = open('SaveData.txt', 'r')
+        except:
+            print('Failed')
+            return
+        else:
+            for line in data:
+                args = line.split(',')
+                try:
+                    args[1] = float(args[1])
+                    args[2] = float(args[2])
+                    self.addTimer(args[0], args[1], args[2])
+                except:
+                    print('\nError: file does not follow the expected format')
+            data.close()
 
 
 class Parser:
@@ -198,23 +214,25 @@ class Parser:
     def make(self, args):
         if isinstance(args, str):
             self.tm.addTimer(args, 0, 0)
+            self.show()
         elif isinstance(args, list):
             for arg in args:
                 self.tm.addTimer(arg, 0, 0)
+                self.show()
         else:
-            print('Unknown error occurred in Parser.make()')
-        self.show()
+            print('\nNo arguments provided')
 
 
     def delete(self, args):
         if isinstance(args, str):
             self.tm.deleteTimer(args)
+            self.show()
         elif isinstance(args, list):
             for arg in args:
                 self.tm.deleteTimer(arg)
+                self.show()
         else:
-            print('Unknown error occurred in Parser.delete()')
-        self.show()
+            print('\nNo arguments provided')
 
 
     def start(self, args):
@@ -294,9 +312,6 @@ class Parser:
 
 
 
-
-
-
 def main():
     name = 'Papunk'
     command = ''
@@ -306,7 +321,7 @@ def main():
     manager = TimerManager()
     parser = Parser(manager)
 
-    
+    manager.loadData()
     while programIsRunning:
         command = input(prompt)
 
