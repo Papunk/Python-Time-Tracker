@@ -104,9 +104,10 @@ class TimerManager:
         return self.timers
 
     def saveData(self):
-        data = open('SaveData.csv', 'w')
+        data = open('SaveData.txt', 'w')
         for timer in self.timers:
-            string = timer.name + ',' + str(timer.timeElapsed) + ',' + str(timer.initialTime)
+            string = timer.name + ',' + str(timer.timeElapsed) + ',' + str(timer.initialTime) + '\n'
+            print(string)
             data.write(string)
         data.close()
 
@@ -153,7 +154,7 @@ class Parser:
             elif command == self.KeyWords.SHOW.value:
                 self.show()
             elif command == self.KeyWords.QUIT.value:
-                exit()
+                self.end()
         else:
             print('invalid command:', command)
 
@@ -287,7 +288,7 @@ class Parser:
             print('No timers to show')
 
     
-    def quit(self):
+    def end(self):
         self.tm.saveData()
         exit()
 
