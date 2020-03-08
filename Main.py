@@ -5,7 +5,7 @@ from TimerManager import TimerManager
 def opening():
     print()
     print('Python Time Tracker')
-    print('–––––––––––––––v1.7')
+    print('–––––––––––––––v1.8')
 
 
 def main():

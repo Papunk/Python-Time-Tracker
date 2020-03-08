@@ -99,7 +99,7 @@ class Parser:
     def make(self, args):
         if args != None:
             for arg in args:
-                self.tm.addTimer(arg, 0, 0)
+                self.tm.addTimer(arg, 0, 0, None)
             self.show()
         else:
             print('\nNo arguments provided')
