@@ -37,6 +37,17 @@ class Timer:
         else:
             return self.timeToString(round(self.timeElapsed))
 
+    
+    def logData(self, time):
+        try:
+            time = int(time)
+            self.timeElapsed += time
+        except:
+            print('Exploded')
+
+
+
+
 
     def timeToString(self, s):
         if self.isActive:
@@ -103,6 +114,13 @@ class TimerManager:
         for timer in self.timers:
             timers.append(timer)
         return timers
+    
+
+    def getTimerNames(self):
+        timerNames = []
+        for timer in self.timers:
+            timerNames.append(timer.name)
+        return timerNames
 
 
     def saveData(self):
@@ -141,6 +159,8 @@ class Parser:
         RESET = 'reset'
         SHOW = 'show'
         QUIT = 'quit'
+        LOG = 'log'
+        SET = 'set'
 
 
     def __init__(self, tm):
@@ -171,6 +191,10 @@ class Parser:
                 self.show()
             elif command == self.KeyWords.QUIT.value:
                 self.end()
+            elif command == self.KeyWords.LOG.value:
+                self.log(arguments)
+            elif command == self.KeyWords.SET.value:
+                self.set()
         else:
             print('\nInvalid command')
 
@@ -326,10 +350,52 @@ class Parser:
         exit()
 
 
+    def parsePair(self, cmd, word):
+        cmd = cmd.split()
+        if len(cmd) < 2:
+            print('\nNeed two arguments. Please follow format: "' + word + ' HH:MM:SS timerName"')
+            return None
+        elif len(cmd) > 2:
+            newName = ''
+            for word in cmd[1:]:
+                newName += word + ' '
+            cmd = [cmd[0], newName.rstrip()]
+        return cmd
+
+
+    def log(self, args):
+        cmds = {}
+        for arg in args:
+            cmd = self.parsePair(arg, 'log')
+            if cmd != None:
+                cmds[cmd[1]] = cmd[0]
+
+        found = 0
+        for timer in self.tm.timers:
+            if timer.name in cmds.keys():
+                timer.logData(cmds[timer.name])
+                found += 1
+        if found < len(cmds):
+            print('\n' + str(len(cmds) - found), 'timer(s) not found')
+        self.show()
+
+
+        def set(self, args):
+            pass
+
+
+
+
+
+
+
+
+
+
 def opening():
     print()
     print('Python Time Tracker')
-    print('–––––––––––––––v1.0')
+    print('–––––––––––––––v1.1')
 
 
 def main():

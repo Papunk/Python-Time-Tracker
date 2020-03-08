@@ -2,7 +2,7 @@ Rules
 –––––
 -   only one command is allowed per line
 -   commands are not case sensitive
--   commands that accept arguments may take unlimited arguments separated by commas
+-   commands may take multiple arguments separated by commas
 
 Commands
 ––––––––
@@ -20,3 +20,9 @@ Commands
     ex:     "show"
 7.  quit:   Saves timers and their status, then quits. Takes no arguments
     ex:     "quit"
+8.  log:    Adds the given time to the timer. Time must be given in HH:MM:SS format or seconds will be assumed.
+            Takes the timer name after the time, separated by a space.
+    ex:     "log 3:12:38 timerName" or "log 120 timerName"
+9   set:    Changes a timer time according to the time given. Time must be given in HH:MM:SS format or seconds will be assumed.
+            Takes the timer name after the time, separated by a space.
+    ex:     "set 3:12:38 timerName" or "set 120 timerName"
