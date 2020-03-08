@@ -1,42 +1,22 @@
 Rules
------
+–––––
 -   only one command is allowed per line
 -   commands are not case sensitive
--   commands may take unlimited arguments separated by commas
+-   commands that accept arguments may take unlimited arguments separated by commas
 
 Commands
---------
-I.      make
-        - desc: creates a timer
-        - args: timer name
-        - ex:   "make study" creates a timer called study
-
-II.     delete
-        - desc: deletes a timer
-        - args: (timer name) or (all)
-        - ex:   "delete study" deletes the timer called study
-                "delete all" deletes all timers
-
-III.    start
-        - desc: starts a timer
-        - args: timer name
-        - ex:   "start study" starts the timer called study
-
-IV.     stop
-        - desc: stops a timer
-        - args: (timer name) or (all)
-        - ex:   "stop study" stops the timer called study
-                "stop all" stops all timers
-
-V.      reset
-        - desc: resets a timer
-        - args: (timer name) or (all)
-        - ex:   "reset study" resets the timer called study
-                "reset all" resets all timers
-
-VI.     show
-        - desc: displays timers
-        - args: (timer name) or (all) or (active)
-        - ex:   "show study" will display the active timer
-                "show all" will display all timers
-                "show active" will display all active timers
+––––––––
+1.  make:   Creates a new timer for every name given as argument.
+    ex:     "make timerName" or "make timerName1, timerName2, etc"  
+2.  delete: Deletes any timer given as argument. If no arguments are provided, deletes all timers.
+    ex:     "delete timerName" or "delete"
+3.  start:  Starts any timer given as argument. If no arguments are provided, starts all timers.
+    ex:     "start timerName" or "start"
+4.  stop:   Stops any timer given as argument. If no arguments are provided, stops all timers.
+    ex:     "stop timerName" or "stop"
+5.  reset:  Resets any timer given as argument. If no arguments are provided, resets all timers.
+    ex:     "reset timerName" or "reset"
+6.  show:   Show all timers. Takes no arguments.
+    ex:     "show"
+7.  quit:   Saves timers and their status, then quits. Takes no arguments
+    ex:     "quit"

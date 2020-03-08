@@ -1,7 +1,7 @@
 import time
-import matplotlib
-import tkinter as tk
 from enum import Enum
+# import matplotlib
+# import tkinter as tk
 
 class Timer:
 
@@ -71,7 +71,6 @@ class Timer:
         return h + ':' + m + ':' + s
         
         
-
 class TimerManager:
  
     def __init__(self):
@@ -83,7 +82,7 @@ class TimerManager:
         for timer in self.timers: # checks if timer with given name exists
             if timer.name == timerName:
                 print('\nError: timer with name', timerName, 'already exists')
-                break
+                return
         self.timers.append(Timer(timerName, timeElapsed, initialTime))
         if len(timerName) > self.longestNameLen:
             self.longestNameLen = len(timerName)
@@ -94,14 +93,16 @@ class TimerManager:
         for timer in self.timers: # looks for timer with matching name
             if timer.name == timerName:
                 self.timers.remove(timer)
-                del timer
                 foundMatchingTimer = True
         if not foundMatchingTimer:
             print('\nError: timer', timerName, 'does not exist')
 
 
     def getTimers(self):
-        return self.timers
+        timers = []
+        for timer in self.timers:
+            timers.append(timer)
+        return timers
 
 
     def saveData(self):
@@ -116,8 +117,7 @@ class TimerManager:
         try:
             data = open('SaveData.txt', 'r')
         except:
-            print('Failed')
-            return
+            print('\nNo save data found')
         else:
             for line in data:
                 args = line.split(',')
@@ -153,7 +153,7 @@ class Parser:
         command = text['command']
         arguments = text['arguments']
 
-        if text != None:
+        if command != None:
             # loops for the keyword used
             if command == self.KeyWords.SYNTAX.value:
                 self.syntaxGuide()
@@ -172,7 +172,7 @@ class Parser:
             elif command == self.KeyWords.QUIT.value:
                 self.end()
         else:
-            print('invalid command:', command)
+            print('\nInvalid command')
 
 
     def separate(self, text):
@@ -195,7 +195,7 @@ class Parser:
                     else:
                         arguments = [arguments]
                 else:
-                    command = text
+                    command = text.lower()
         return {'command':command, 'arguments':arguments}
 
 
@@ -212,27 +212,27 @@ class Parser:
 
 
     def make(self, args):
-        if isinstance(args, str):
-            self.tm.addTimer(args, 0, 0)
-            self.show()
-        elif isinstance(args, list):
+        if args != None:
             for arg in args:
                 self.tm.addTimer(arg, 0, 0)
-                self.show()
+            self.show()
         else:
             print('\nNo arguments provided')
 
 
     def delete(self, args):
-        if isinstance(args, str):
-            self.tm.deleteTimer(args)
-            self.show()
-        elif isinstance(args, list):
+        if args != None:
             for arg in args:
                 self.tm.deleteTimer(arg)
-                self.show()
+            self.show()
         else:
-            print('\nNo arguments provided')
+            validation = input('\nAre you sure you want to delete all timers? This action cannot be undone. (y/n) ')
+            if validation.lower() == 'y':
+                for timer in self.tm.getTimers():
+                    self.tm.deleteTimer(timer.name)
+                print('\nAll timers deleted')
+            else:
+                print('\nAborted')
 
 
     def start(self, args):
@@ -278,10 +278,25 @@ class Parser:
             
 
     def reset(self, args):
-        for timer in self.tm.timers:
-            if timer.name in args:
-                timer.isActive = False
-                timer.timeElapsed = 0
+        if len(self.tm.timers) != 0:
+            if args != None:
+                for timer in self.tm.timers:
+                    if timer.name in args:
+                        timer.isActive = False
+                        timer.timeElapsed = 0
+                        timer.initialTime = 0
+            else:
+                validation = input('\nAre you sure you want to reset all timers? This action cannot be undone. (y/n) ')
+                if validation.lower() == 'y':
+                    for timer in self.tm.timers:
+                        timer.isActive = False
+                        timer.timeElapsed = 0
+                        timer.initialTime = 0
+                else:
+                    print('\nAborted')
+            self.show()
+        else:
+            print('\nNo timers found')
 
 
     def timerInfo(self, timer):
@@ -311,10 +326,16 @@ class Parser:
         exit()
 
 
+def opening():
+    print()
+    print('Python Time Tracker')
+    print('–––––––––––––––v1.0')
+
 
 def main():
-    name = 'Papunk'
-    command = ''
+    opening()
+
+    name = 'User'
     prompt = '\n' + name + ': '
     programIsRunning = True
 
@@ -324,8 +345,8 @@ def main():
     manager.loadData()
     while programIsRunning:
         command = input(prompt)
-
         parser.parse(command)
+        manager.saveData()
 
 
 main()
