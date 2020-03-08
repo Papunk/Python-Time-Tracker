@@ -30,6 +30,7 @@ class Timer:
     def getTimeElapsed(self):
         if self.isActive:
             self.timeElapsed += (time.time() - self.initialTime)
+            self.initialTime = time.time()
         if self.isActive:
             return self.timeToString(round(self.timeElapsed))
         else:
