@@ -15,7 +15,6 @@ class Timer:
 
     def startTimer(self):
         '''gets the current system time in seconds'''
-        self.timeElapsed = 0
         self.initialTime = time.time()
         self.isActive = True
 
@@ -23,14 +22,14 @@ class Timer:
     def endTimer(self):
         '''returns the time elapsed since the timer
         was started in seconds as an integer'''
-        self.timeElapsedFormatted = self.getTimeElapsed()
+        self.timeElapsed += time.time() - self.initialTime
         self.initialTime = 0 
         self.isActive = False
 
 
     def getTimeElapsed(self):
         if self.isActive:
-            self.timeElapsed = time.time() - self.initialTime
+            self.timeElapsed += time.time() - self.initialTime
             return self.timeToString(round(self.timeElapsed))
         else:
             return self.timeToString(round(self.timeElapsed))

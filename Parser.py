@@ -92,7 +92,7 @@ class Parser:
             print('\nError: File not found')
         else:
             for line in syntax:
-                print(line) 
+                print(line.rstrip()) 
             syntax.close()   
 
 
