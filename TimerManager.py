@@ -12,7 +12,7 @@ class TimerManager:
             if timer.name == timerName:
                 print('\nError: timer with name', timerName, 'already exists')
                 return
-        self.timers.append(Timer(timerName, timeElapsed, initialTime))
+        self.timers.append(Timer(timerName, timeElapsed, initialTime, None))
         if len(timerName) > self.longestNameLen:
             self.longestNameLen = len(timerName)
 
@@ -39,6 +39,13 @@ class TimerManager:
         for timer in self.timers:
             timerNames.append(timer.name)
         return timerNames
+
+    
+    def getTimer(self, timerName):
+        for timer in self.timers:
+            if timer.name == timerName:
+                return timer
+        return None
 
 
     def saveData(self):

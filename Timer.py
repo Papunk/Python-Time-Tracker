@@ -2,7 +2,7 @@ import time
 
 class Timer:
 
-    def __init__(self, name, timeElapsed, initialTime):
+    def __init__(self, name, timeElapsed, initialTime, area):
         self.name = name
         self.timeElapsed = timeElapsed
         self.initialTime = initialTime
@@ -10,6 +10,7 @@ class Timer:
             self.isActive = False
         else:
             self.isActive = True
+        self.area = area
 
 
     def startTimer(self):

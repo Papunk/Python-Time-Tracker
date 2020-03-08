@@ -3,6 +3,7 @@ Rules
 -   only one command is allowed per line
 -   commands are not case sensitive
 -   commands may take multiple arguments separated by commas
+-   if an area has no timers, it is deleted
 
 Commands
 ––––––––
@@ -26,3 +27,14 @@ Commands
 9   set:    Changes a timer time according to the time given. Time must be given in HH:MM:SS format or seconds will be assumed.
             Takes the timer name after the time, separated by a space.
     ex:     "set 3:12:38 timerName" or "set 120 timerName"
+
+Area Management
+–––––––––––––––
+1.  area:   Creates an area to store timers. Takes the timer name after the area name, separated by a space.
+    ex:     "area areaName"
+2.  add:    Adds the given timers to the given area. Takes the timer name after the area name, separated by a space.
+            If no timer names are given, all timers are added.
+    ex:     "add areaName timerName1"
+3.  root:   Adds the given timernames to the default area. If no arguments are given, all timers are set to the default
+            area, deleting all custom areas.
+    ex:     "root timerName" or "root"

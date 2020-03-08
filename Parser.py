@@ -5,6 +5,7 @@ class Parser:
 
     class KeyWords(Enum):
         SYNTAX = 'syntax'
+        # Commands
         MAKE = 'make'
         DEL = 'delete'
         START = 'start'
@@ -14,6 +15,9 @@ class Parser:
         QUIT = 'quit'
         LOG = 'log'
         SET = 'set'
+        # Area Management
+        AREA = 'area'
+        ROOT = 'root'
 
 
     def __init__(self, tm):
@@ -48,6 +52,10 @@ class Parser:
                 self.logTime(arguments)
             elif command == self.KeyWords.SET.value:
                 self.setTime(arguments)
+            elif command == self.KeyWords.AREA.value:
+                self.addToArea(arguments)
+            elif command == self.KeyWords.ROOT.value:
+                pass
         else:
             print('\nInvalid command')
 
@@ -185,29 +193,45 @@ class Parser:
         space = ''
         for _ in range(spaceLen):
             space += ' '
-
         print(timer.name + space, '|', status, '|', timer.getTimeElapsed())
 
 
     def show(self):
-        print()
-        if len(self.tm.timers) > 0:
-            for timer in self.tm.timers:
-                self.timerInfo(timer)
+        timers = self.tm.getTimers()
+        if len(timers) > 0:
+            areas = {}
+            for timer in timers:
+                if timer.area == None:
+                    if 'Timers' not in areas.keys():
+                        areas['Timers'] = [timer]
+                    else:
+                        areas['Timers'].append(timer)
+                else:
+                    if timer.area not in areas.keys():
+                        areas[timer.area] = [timer]
+                    else:
+                        areas[timer.area].append(timer)
+            for area, timers in areas.items():
+                print('\n' + area)
+                line = ''
+                for _ in range(len(area)):
+                    line += '–'
+                print(line)
+                for timer in timers:
+                    self.timerInfo(timer)
         else:
-            print('No timers to show')
-
-    
+            print('\nNo timers to show')
+        
+  
     def end(self):
         self.tm.saveData()
         print()
         exit()
         
 
-    def parsePair(self, cmd, word):
+    def parsePair(self, cmd):
         cmd = cmd.split()
         if len(cmd) < 2:
-            print('\nNeed two arguments. Please follow format: "' + word + ' HH:MM:SS timerName"')
             return None
         elif len(cmd) > 2:
             newName = ''
@@ -220,10 +244,11 @@ class Parser:
     def logTime(self, args):
         cmds = {}
         for arg in args:
-            cmd = self.parsePair(arg, 'log')
+            cmd = self.parsePair(arg)
             if cmd != None:
                 cmds[cmd[1]] = cmd[0]
-
+            else:
+                print('\nNeed two arguments.')
         found = 0
         for timer in self.tm.timers:
             if timer.name in cmds.keys():
@@ -237,10 +262,11 @@ class Parser:
     def setTime(self, args):
         cmds = {}
         for arg in args:
-            cmd = self.parsePair(arg, 'set')
+            cmd = self.parsePair(arg)
             if cmd != None:
                 cmds[cmd[1]] = cmd[0]
-
+            else:
+                print('\nNeed two arguments.')
         found = 0
         for timer in self.tm.timers:
             if timer.name in cmds.keys():
@@ -249,3 +275,25 @@ class Parser:
         if found < len(cmds):
             print('\n' + str(len(cmds) - found), 'timer(s) not found')
         self.show()
+
+    
+    def addToArea(self, args):
+        if args == None:
+            print('\nNo arguments given')
+            return
+        if len(self.tm.timers) > 0:
+            for arg in args:
+                cmd = self.parsePair(arg)
+                if cmd != None:
+                    timer = self.tm.getTimer(cmd[1])
+                    if timer != None:
+                        timer.area = cmd[0]
+                    else:
+                        print('\nTimer with name', cmd[1], 'not found')
+                elif len(args) == 1:
+                    for timer in self.tm.timers:
+                        timer.area = args[0]
+            self.show()
+        else:
+            print('\nNo timers found')
+
