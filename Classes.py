@@ -43,10 +43,29 @@ class Timer:
             time = int(time)
             self.timeElapsed += time
         except:
-            print('Exploded')
+            time = self.stringToTime(time)
+            if time == None:
+                print('\nError: Invalid time format')
+            else:
+                self.timeElapsed += time
 
 
-
+    def stringToTime(self, string):
+        sep1 = string.find(':')
+        sep2 = string.find(':', sep1 + 1)
+        if sep1 == -1 or sep2 == -2:
+            return None
+        else:
+            try:
+                h = int(string[:sep1])
+                m = int(string[sep1+1:sep2])
+                s = int(string[sep2+1:])
+            except:
+                return None
+            if h < 0 or m >= 60 or m < 0 or  s >= 60 or s < 0:
+                return None
+            else:
+                return (h * 3600) + (m * 60) + s
 
 
     def timeToString(self, s):
@@ -192,9 +211,9 @@ class Parser:
             elif command == self.KeyWords.QUIT.value:
                 self.end()
             elif command == self.KeyWords.LOG.value:
-                self.log(arguments)
+                self.logTime(arguments)
             elif command == self.KeyWords.SET.value:
-                self.set()
+                self.setTime(arguments)
         else:
             print('\nInvalid command')
 
@@ -363,7 +382,7 @@ class Parser:
         return cmd
 
 
-    def log(self, args):
+    def logTime(self, args):
         cmds = {}
         for arg in args:
             cmd = self.parsePair(arg, 'log')
@@ -380,8 +399,8 @@ class Parser:
         self.show()
 
 
-        def set(self, args):
-            pass
+    def setTime(self, args):
+        pass
 
 
 
@@ -395,7 +414,7 @@ class Parser:
 def opening():
     print()
     print('Python Time Tracker')
-    print('–––––––––––––––v1.1')
+    print('–––––––––––––––v1.3')
 
 
 def main():
