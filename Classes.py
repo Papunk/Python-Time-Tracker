@@ -48,6 +48,19 @@ class Timer:
                 print('\nError: Invalid time format')
             else:
                 self.timeElapsed += time
+    
+
+    def setData(self, time):
+        try:
+            time = int(time)
+            self.timeElapsed = time
+        except:
+            time = self.stringToTime(time)
+            if time == None:
+                print('\nError: Invalid time format')
+            else:
+                self.timeElapsed = time
+
 
 
     def stringToTime(self, string):
@@ -366,8 +379,9 @@ class Parser:
     
     def end(self):
         self.tm.saveData()
+        print()
         exit()
-
+        
 
     def parsePair(self, cmd, word):
         cmd = cmd.split()
@@ -400,7 +414,20 @@ class Parser:
 
 
     def setTime(self, args):
-        pass
+        cmds = {}
+        for arg in args:
+            cmd = self.parsePair(arg, 'set')
+            if cmd != None:
+                cmds[cmd[1]] = cmd[0]
+
+        found = 0
+        for timer in self.tm.timers:
+            if timer.name in cmds.keys():
+                timer.setData(cmds[timer.name])
+                found += 1
+        if found < len(cmds):
+            print('\n' + str(len(cmds) - found), 'timer(s) not found')
+        self.show()
 
 
 
