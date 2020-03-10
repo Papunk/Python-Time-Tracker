@@ -6,17 +6,17 @@ class Parser:
     class KeyWords(Enum):
         SYNTAX = 'syntax'
         # Commands
-        MAKE = 'make'
-        DEL = 'delete'
-        START = 'start'
-        STOP = 'stop'
-        RESET = 'reset'
+        MAKE = 'make' or '-m'
+        DEL = 'delete' or '-d'
+        START = 'start' or '-s'
+        STOP = 'stop' or '-x'
+        RESET = 'reset' or '-r'
         SHOW = 'show'
-        QUIT = 'quit'
+        QUIT = 'quit' or '-q'
         LOG = 'log'
         SET = 'set'
         # Area Management
-        AREA = 'area'
+        AREA = 'area' or '-a'
         ROOT = 'root'
 
 
@@ -186,7 +186,7 @@ class Parser:
 
     def timerInfo(self, timer):
         if timer.isActive:
-            status = 'active  '
+            status = ' \033[1m\033[4mactive\033[0m '
         else:
             status = 'inactive'
         spaceLen = self.tm.longestNameLen - len(str(timer.name))
