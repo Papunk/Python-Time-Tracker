@@ -186,14 +186,16 @@ class Parser:
 
     def timerInfo(self, timer):
         if timer.isActive:
-            status = ' \033[1m\033[4mactive\033[0m '
+            status = 'active  '
+            seq = '\033[0m' # bold, brighter color
         else:
             status = 'inactive'
+            seq = '\033[37m' # dimmer color
         spaceLen = self.tm.longestNameLen - len(str(timer.name))
         space = ''
         for _ in range(spaceLen):
             space += ' '
-        print(timer.name + space, '|', status, '|', timer.getTimeElapsed())
+        print(seq + timer.name + space, '|', status, '|', timer.getTimeElapsed() + '\033[0m')
 
 
     def show(self):
@@ -212,11 +214,11 @@ class Parser:
                     else:
                         areas[timer.area].append(timer)
             for area, timers in areas.items():
-                print('\n' + area)
+                print('\n\033[1m' + area + '\033[0m')
                 line = ''
                 for _ in range(len(area)):
                     line += '–'
-                print(line)
+                print(line.rstrip())
                 for timer in timers:
                     self.timerInfo(timer)
         else:
