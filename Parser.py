@@ -6,17 +6,24 @@ class Parser:
     class KeyWords(Enum):
         SYNTAX = 'syntax'
         # Commands
-        MAKE = 'make' or '-m'
-        DEL = 'delete' or '-d'
-        START = 'start' or '-s'
-        STOP = 'stop' or '-x'
-        RESET = 'reset' or '-r'
+        MAKE = 'make'
+        SHORTHAND_MAKE = '-m'
+        DEL = 'delete'
+        SHORTHAND_DEL = '-d'
+        START = 'start'
+        SHORTHAND_START = '-s'
+        STOP = 'stop'
+        SHORTHAND_STOP = '-x'
+        RESET = 'reset'
+        SHORTHAND_RESET = '-r'
         SHOW = 'show'
-        QUIT = 'quit' or '-q'
+        QUIT = 'quit'
+        SHORTHAND_QUIT = '-q'
         LOG = 'log'
         SET = 'set'
         # Area Management
-        AREA = 'area' or '-a'
+        AREA = 'area'
+        SHORTHAND_AREA = '-a'
         ROOT = 'root'
 
 
@@ -34,28 +41,30 @@ class Parser:
             # loops for the keyword used
             if command == self.KeyWords.SYNTAX.value:
                 self.syntaxGuide()
-            elif command == self.KeyWords.MAKE.value:
+            elif command == self.KeyWords.MAKE.value or command == self.KeyWords.SHORTHAND_MAKE.value:
                 self.make(arguments)
-            elif command == self.KeyWords.DEL.value:
+            elif command == self.KeyWords.DEL.value or command == self.KeyWords.SHORTHAND_DEL.value:
                 self.delete(arguments)
-            elif command == self.KeyWords.START.value:
+            elif command == self.KeyWords.START.value or command == self.KeyWords.SHORTHAND_START.value:
                 self.start(arguments)
-            elif command == self.KeyWords.STOP.value:
+            elif command == self.KeyWords.STOP.value  or command == self.KeyWords.SHORTHAND_STOP.value:
                 self.stop(arguments)
-            elif command == self.KeyWords.RESET.value:
+            elif command == self.KeyWords.RESET.value or command == self.KeyWords.SHORTHAND_RESET.value:
                 self.reset(arguments)
             elif command == self.KeyWords.SHOW.value:
                 self.show()
-            elif command == self.KeyWords.QUIT.value:
+            elif command == self.KeyWords.QUIT.value or command == self.KeyWords.SHORTHAND_QUIT.value:
                 self.end()
             elif command == self.KeyWords.LOG.value:
                 self.logTime(arguments)
             elif command == self.KeyWords.SET.value:
                 self.setTime(arguments)
-            elif command == self.KeyWords.AREA.value:
+            elif command == self.KeyWords.AREA.value or command == self.KeyWords.SHORTHAND_AREA.value:
                 self.addToArea(arguments)
             elif command == self.KeyWords.ROOT.value:
                 pass
+            else:
+                print('\nInvalid command:', command)
         else:
             print('\nInvalid command')
 
