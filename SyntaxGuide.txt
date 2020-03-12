@@ -6,6 +6,7 @@ Rules
 -   if an area has no timers, it is deleted
 -   area names must not have spaces
 
+
 Timer Commands
 ––––––––––––––
 1.  make:   Creates a new timer for every name given as argument.
@@ -58,3 +59,14 @@ Area Management
             If no arguments are given, all timers are set to the default area,
             deleting all custom areas.
     ex:     "root timerName" or "root"
+
+
+Shorthand Forms
+–––––––––––––––
+1.  make:   -m
+2.  delete: -d
+3.  start:  -s
+4.  stop:   -x
+5.  reset:  -r
+6.  quit:   -q
+7.  area:   -a
