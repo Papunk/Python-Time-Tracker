@@ -8,6 +8,7 @@ class TimerManager:
 
 
     def addTimer(self, timerName, timeElapsed, initialTime, area):
+        '''adds a timer object to the list'''
         for timer in self.timers: # checks if timer with given name exists
             if timer.name == timerName:
                 print('\nError: timer with name', timerName, 'already exists')
@@ -18,6 +19,7 @@ class TimerManager:
 
 
     def deleteTimer(self, timerName):
+        '''removes the timer object with the given name from the list'''
         foundMatchingTimer = False
         for timer in self.timers: # looks for timer with matching name
             if timer.name == timerName:
@@ -28,6 +30,7 @@ class TimerManager:
 
 
     def getTimers(self):
+        '''returns a list of the timers'''
         timers = []
         for timer in self.timers:
             timers.append(timer)
@@ -35,6 +38,7 @@ class TimerManager:
     
 
     def getTimerNames(self):
+        '''returns a list of the timer names'''
         timerNames = []
         for timer in self.timers:
             timerNames.append(timer.name)
@@ -42,6 +46,7 @@ class TimerManager:
 
     
     def getTimer(self, timerName):
+        '''returns a timer object with the given name'''
         for timer in self.timers:
             if timer.name == timerName:
                 return timer
@@ -49,6 +54,8 @@ class TimerManager:
 
 
     def saveData(self):
+        '''writes the current timer data
+        to a save file'''
         data = open('SaveData.txt', 'w')
         for timer in self.timers:
             string = timer.name + ',' + str(timer.timeElapsed) + ',' + str(timer.initialTime) + ',' + str(timer.area) + '\n'
@@ -57,6 +64,8 @@ class TimerManager:
 
 
     def loadData(self):
+        '''populates timer list with timer objects
+        according to the attributes in the save file'''
         try:
             data = open('SaveData.txt', 'r')
         except:

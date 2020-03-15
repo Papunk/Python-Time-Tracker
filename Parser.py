@@ -1,9 +1,16 @@
 from TimerManager import TimerManager
 from enum import Enum
 
+'''
+THE IMPLEMENTATION OF SOME FUNCTIONS
+HERE IS A BIT CLUMSY, NEED TO WORK ON THAT
+'''
+
 class Parser:
 
     class KeyWords(Enum):
+        '''allowed keywords for commands'''
+
         SYNTAX = 'syntax'
         # Commands
         MAKE = 'make'
@@ -62,7 +69,7 @@ class Parser:
             elif command == self.KeyWords.AREA.value or command == self.KeyWords.SHORTHAND_AREA.value:
                 self.addToArea(arguments)
             elif command == self.KeyWords.ROOT.value:
-                pass
+                self.root(arguments)
             else:
                 print('\nInvalid command:', command)
         else:
@@ -135,6 +142,7 @@ class Parser:
                 for timer in self.tm.timers:
                     if not timer.isActive:
                         timer.startTimer()
+                self.show()
             else:
                 for timer in self.tm.timers:
                     if timer.name in args:
@@ -145,7 +153,8 @@ class Parser:
                     print('\nCould not find:')
                     for arg in args:
                         print(arg)
-            self.show()
+                else:
+                    self.show()
         else:
             print('\nNo timers found')
 
@@ -156,6 +165,7 @@ class Parser:
                 for timer in self.tm.timers:
                     if timer.isActive:
                         timer.endTimer()
+                self.show()
             else:
                 for timer in self.tm.timers:
                     if timer.name in args:
@@ -166,7 +176,8 @@ class Parser:
                     print('\nCould not find:')
                     for arg in args:
                         print(arg)
-            self.show()
+                else:
+                    self.show()
         else:
             print('\nNo timers found')
             
@@ -267,7 +278,8 @@ class Parser:
                 found += 1
         if found < len(cmds):
             print('\n' + str(len(cmds) - found), 'timer(s) not found')
-        self.show()
+        else:
+            self.show()
 
 
     def setTime(self, args):
@@ -285,14 +297,14 @@ class Parser:
                 found += 1
         if found < len(cmds):
             print('\n' + str(len(cmds) - found), 'timer(s) not found')
-        self.show()
+        else:
+            self.show()
 
     
     def addToArea(self, args):
         if args == None:
             print('\nNo arguments given')
-            return
-        if len(self.tm.timers) > 0:
+        elif len(self.tm.timers) > 0:
             for arg in args:
                 cmd = self.parsePair(arg)
                 if cmd != None:
@@ -301,10 +313,14 @@ class Parser:
                         timer.area = cmd[0]
                     else:
                         print('\nTimer with name', cmd[1], 'not found')
+                        return
                 elif len(args) == 1:
                     for timer in self.tm.timers:
                         timer.area = args[0]
             self.show()
         else:
             print('\nNo timers found')
+
+    def root(self, args):
+        pass
 

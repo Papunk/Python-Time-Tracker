@@ -3,6 +3,7 @@ from TimerManager import TimerManager
 
 
 def opening():
+    # prints title
     print()
     print('Python Time Tracker')
     print('–––––––––––––––v1.8')

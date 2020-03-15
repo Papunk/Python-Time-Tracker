@@ -14,20 +14,22 @@ class Timer:
 
 
     def startTimer(self):
-        '''gets the current system time in seconds'''
+        '''gets the system nanotime'''
         self.initialTime = time.time()
         self.isActive = True
 
 
     def endTimer(self):
-        '''returns the time elapsed since the timer
-        was started in seconds as an integer'''
+        '''gets the time elapsed since the timer
+        was started as an integer in seconds'''
         self.timeElapsed += (time.time() - self.initialTime)
         self.initialTime = 0 
         self.isActive = False
 
 
     def getTimeElapsed(self):
+        '''obtains time elapsed without
+        stopping the timer'''
         if self.isActive:
             self.timeElapsed += (time.time() - self.initialTime)
             self.initialTime = time.time()
@@ -38,6 +40,7 @@ class Timer:
 
     
     def logData(self, time):
+        '''ads input value to the time elapsed'''
         try:
             time = int(time)
             self.timeElapsed += time
@@ -50,6 +53,7 @@ class Timer:
     
 
     def setData(self, time):
+        '''changes the time elapsed to the input value'''
         try:
             time = int(time)
             self.timeElapsed = time
@@ -62,6 +66,8 @@ class Timer:
 
 
     def stringToTime(self, string):
+        '''turns a string in
+        HH:MM:SS format into seconds'''
         sep1 = string.find(':')
         sep2 = string.find(':', sep1 + 1)
         if sep1 == -1 or sep2 == -2:
@@ -80,6 +86,8 @@ class Timer:
 
 
     def timeToString(self, s):
+        '''turns time in seconds
+        into a string in HH:MM:SS format'''
         if self.isActive:
             placeHol = '00'
         else:
