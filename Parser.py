@@ -100,6 +100,8 @@ class Parser:
         return {'command':command, 'arguments':arguments}
 
 
+
+
     def syntaxGuide(self):
         print()
         try:
