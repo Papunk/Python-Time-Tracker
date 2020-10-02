@@ -1,4 +1,5 @@
 import time
+import Errors
 
 class Timer:
 
@@ -11,7 +12,7 @@ class Timer:
         else:
             self.isActive = True
         self.area = area
-
+        
 
     def startTimer(self):
         '''gets the system nanotime'''
@@ -20,16 +21,14 @@ class Timer:
 
 
     def endTimer(self):
-        '''gets the time elapsed since the timer
-        was started as an integer in seconds'''
+        '''gets the time elapsed since the timer was started as an integer in seconds'''
         self.timeElapsed += (time.time() - self.initialTime)
         self.initialTime = 0 
         self.isActive = False
 
 
     def getTimeElapsed(self):
-        '''obtains time elapsed without
-        stopping the timer'''
+        '''returns time elapsed without stopping the timer'''
         if self.isActive:
             self.timeElapsed += (time.time() - self.initialTime)
             self.initialTime = time.time()
@@ -40,27 +39,45 @@ class Timer:
 
     
     def logData(self, time):
-        '''ads input value to the time elapsed'''
-        try:
+        '''
+        Desc:
+            Adds input value to the time elapsed
+
+        Arguments:
+            time - the time in seconds or as a string in HH:MM:SS format
+
+        Raises:
+            InvalidTimeFormatError
+        '''
+        try: # time in seconds
             time = int(time)
             self.timeElapsed += time
-        except:
+        except: # time as a string
             time = self.stringToTime(time)
             if time == None:
-                print('\nError: Invalid time format')
+                raise Errors.InvalidTimeFormat
             else:
                 self.timeElapsed += time
-    
+
 
     def setData(self, time):
-        '''changes the time elapsed to the input value'''
+        '''
+        Desc:
+            changes the time elapsed to the input value
+        
+        Arguments:
+            time - the time in seconds or as a string in HH:MM:SS format
+
+        Raises:
+            InvalidTimeFormatError
+        '''
         try:
             time = int(time)
             self.timeElapsed = time
         except:
             time = self.stringToTime(time)
             if time == None:
-                print('\nError: Invalid time format')
+                raise Errors.InvalidTimeFormat
             else:
                 self.timeElapsed = time
 
