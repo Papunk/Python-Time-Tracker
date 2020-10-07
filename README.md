@@ -9,7 +9,7 @@ CLI time tracking program made with python
   - Run multiple timers at once
   
 ### Areas
-  - Organize timers into cutom areas
+  - Organize timers into custom areas
   - Custom names
   
 ### Commands
