@@ -3,23 +3,41 @@ from Timer import Timer
 class TimerManager:
  
     def __init__(self):
+        '''
+        Desc:
+            Handles timers and their respective areas
+        '''
         self.timers = []
         self.longestNameLen = 0
 
 
     def addTimer(self, timerName, timeElapsed, initialTime, area):
-        '''adds a timer object to the list'''
+        '''
+        Desc:
+            Adds a timer object to the list of timers
+
+        Arguments:
+            timerName (string) - the name of the timer
+            timeElapsed (int) - this is the amount of time the timer has tracked
+            initialTime (int) - if the timer is active, this is the time when it was first set to run
+            area (string) - the name of the area that the timer belongs to 
+        '''
         for timer in self.timers: # checks if timer with given name exists
             if timer.name == timerName:
-                print('\nError: timer with name', timerName, 'already exists')
-                return
+                print('Timer with name', timerName, 'already exists')
         self.timers.append(Timer(timerName, timeElapsed, initialTime, area))
         if len(timerName) > self.longestNameLen:
             self.longestNameLen = len(timerName)
 
 
     def deleteTimer(self, timerName):
-        '''removes the timer object with the given name from the list'''
+        '''
+        Desc:
+            Removes the timer object with the given name from the list
+        
+        Arguments:
+            timerName (string) - the name of the timer
+        '''
         foundMatchingTimer = False
         for timer in self.timers: # looks for timer with matching name
             if timer.name == timerName:
@@ -30,7 +48,13 @@ class TimerManager:
 
 
     def getTimers(self):
-        '''returns a list of the timers'''
+        '''
+        Desc:
+            Returns a list of all existing timers
+
+        Returns:
+            [Timer]
+        '''
         timers = []
         for timer in self.timers:
             timers.append(timer)
@@ -38,7 +62,13 @@ class TimerManager:
     
 
     def getTimerNames(self):
-        '''returns a list of the timer names'''
+        '''
+        Desc:
+            Returns a list of the timer names
+        
+        Returns:
+            [String]
+        '''
         timerNames = []
         for timer in self.timers:
             timerNames.append(timer.name)
@@ -54,8 +84,10 @@ class TimerManager:
 
 
     def saveData(self):
-        '''writes the current timer data
-        to a save file'''
+        '''
+        Desc:
+            Writes the current timer data to a save file
+        '''
         data = open('SaveData.txt', 'w')
         for timer in self.timers:
             string = timer.name + ',' + str(timer.timeElapsed) + ',' + str(timer.initialTime) + ',' + str(timer.area) + '\n'
@@ -64,8 +96,10 @@ class TimerManager:
 
 
     def loadData(self):
-        '''populates timer list with timer objects
-        according to the attributes in the save file'''
+        '''
+        Desc:
+            Populates the timer list with timer objects according to the attributes in the save file
+        '''
         try:
             data = open('SaveData.txt', 'r')
         except:

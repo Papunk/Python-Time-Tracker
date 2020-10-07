@@ -1,5 +1,5 @@
 import time
-import Errors
+from Errors import *
 
 class Timer:
 
@@ -14,7 +14,6 @@ class Timer:
             initialTime (int) - if the timer is active, this is the time when it was first set to run
             area (string) - the name of the area that the timer belongs to
         '''
-
         self.name = name
         self.timeElapsed = timeElapsed
         self.initialTime = initialTime
@@ -30,7 +29,6 @@ class Timer:
         Desc:
             Saves the system nanotime and starts timer
         '''
-
         self.initialTime = time.time()
         self.isActive = True
 
@@ -40,7 +38,6 @@ class Timer:
         Desc:
             Saves the time elapsed since the timer was started as an integer in seconds stops the timer
         '''
-
         self.timeElapsed += (time.time() - self.initialTime)
         self.initialTime = 0 
         self.isActive = False
@@ -51,7 +48,6 @@ class Timer:
         Desc:
             Returns time elapsed without stopping the timer
         '''
-
         if self.isActive:
             self.timeElapsed += (time.time() - self.initialTime)
             self.initialTime = time.time()
@@ -70,16 +66,15 @@ class Timer:
             time (int, string) - the time in seconds or in HH:MM:SS format
 
         Raises:
-            InvalidTimeFormatError
+            InvalidTimeFormatException
         '''
-
         try: # time in seconds
             time = int(time)
             self.timeElapsed += time
         except: # time as a string
             time = self.stringToTime(time)
             if time == None:
-                raise Errors.InvalidTimeFormat
+                raise InvalidTimeFormatException
             else:
                 self.timeElapsed += time
 
@@ -93,16 +88,15 @@ class Timer:
             time (int, string) - the time in seconds or in HH:MM:SS format
 
         Raises:
-            InvalidTimeFormatError
+            InvalidTimeFormatException
         '''
-
         try:
             time = int(time)
             self.timeElapsed = time
         except:
             time = self.stringToTime(time)
             if time == None:
-                raise Errors.InvalidTimeFormat
+                raise InvalidTimeFormatException
             else:
                 self.timeElapsed = time
 
@@ -119,22 +113,21 @@ class Timer:
             int
 
         Raises:
-            InvalidTimeFormatError
+            InvalidTimeFormatException
         '''
-
         sep1 = time.find(':')
         sep2 = time.find(':', sep1 + 1)
         if sep1 == -1 or sep2 == -2:
-            raise Errors.InvalidTimeFormat
+            raise InvalidTimeFormatException
         else:
             try:
                 h = int(time[:sep1])
                 m = int(time[sep1+1:sep2])
                 s = int(time[sep2+1:])
             except:
-                raise Errors.InvalidTimeFormat
+                raise InvalidTimeFormatException
             if h < 0 or m >= 60 or m < 0 or  s >= 60 or s < 0:
-                raise Errors.InvalidTimeFormat
+                raise InvalidTimeFormatException
             else:
                 return (h * 3600) + (m * 60) + s
 
@@ -150,14 +143,13 @@ class Timer:
         Return:
             string in HH:MM:SS format
         '''
-
         try:
             time = int(time)
         except ValueError:
-            raise Errors.InvalidTimeFormat
+            raise InvalidTimeFormatException
 
         if time < 0:
-           raise Errors.InvalidTimeFormat
+           raise InvalidTimeFormatException
 
         if self.isActive:
             placeHol = '00'

@@ -1,3 +1,2 @@
-class InvalidTimeFormat(Exception):
+class InvalidTimeFormatException(Exception):
     pass
-

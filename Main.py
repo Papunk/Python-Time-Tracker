@@ -6,7 +6,7 @@ def opening():
     # prints title
     print()
     print('Python Time Tracker')
-    print('–––––––––––––––v1.8')
+    print('–––––––––––––––v1.0')
 
 
 def main():
