@@ -1,5 +1,5 @@
 from TimerManager import TimerManager
-from enum import Enum
+from enum import Enum # no need for these
 
 '''
 THE IMPLEMENTATION OF SOME FUNCTIONS
@@ -9,6 +9,7 @@ HERE IS A BIT CLUMSY, NEED TO WORK ON THAT
 class Parser:
 
     class KeyWords(Enum):
+        # turn this into a dictionary
         '''allowed keywords for commands'''
 
         SYNTAX = 'syntax'
@@ -44,6 +45,7 @@ class Parser:
         command = text['command']
         arguments = text['arguments']
 
+        # this is impressively awful, use a loop
         if command != None:
             # loops for the keyword used
             if command == self.KeyWords.SYNTAX.value:
@@ -77,6 +79,7 @@ class Parser:
 
 
     def separate(self, text):
+        # needs to be reworked
         command = None
         arguments = None
         # iterates over the acceptable keywords
@@ -100,7 +103,7 @@ class Parser:
         return {'command':command, 'arguments':arguments}
 
 
-
+# gonna need a far more sophisticated parser than this
 
     def syntaxGuide(self):
         print()
