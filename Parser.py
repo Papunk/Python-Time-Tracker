@@ -12,12 +12,20 @@ Parsing technique:
 '''  
 
 class CommandType(Enum):
+    '''
+    Desc:
+        These represent the different kinds of argument that this program takes
+    '''
     NULL = 0
     ONE = 1
     TWO = 2
 
 
 class Command:
+    '''
+    Desc:
+        This class manages command separation
+    '''
 
     keywords = {
         CommandType.NULL: [
@@ -42,10 +50,21 @@ class Command:
 
     @ classmethod
     def isCommand(self, text):
+        '''
+        Desc:
+            Returns the type of the given command
+
+        Arguments:
+            text (string) - the command to be evaluated
+
+        Returns:
+            CommandType, None
+        '''
         for cmdType, keyword in self.keywords.items():
             for pair in keyword:
                 if text in pair:
-                    return cmdType;
+                    return cmdType
+        return None # text was not a valid command
 
 
 
