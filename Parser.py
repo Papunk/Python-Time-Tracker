@@ -1,10 +1,44 @@
 from TimerManager import TimerManager
 from enum import Enum # no need for these
 
+
 '''
-THE IMPLEMENTATION OF SOME FUNCTIONS
-HERE IS A BIT CLUMSY, NEED TO WORK ON THAT
-'''
+Parsing technique:
+    - check if empty
+    - trim whitespace
+    - check what it starts with
+    - subdivide string accordingly
+    - call correct function
+'''  
+
+# commands
+class Command:
+    #TODO these classes should read the data from a file at runtime
+    pass
+
+class NoArgumentCommand(Command):
+    commands = [
+        ('quit', None),
+        ('reset', None)
+    ]
+
+class SingleArgument(Command):
+    commands = [
+        ('make', 'm'),
+        ('delete', 'd'),
+        ('start', 's'),
+        ('stop', 'x'),
+        ('show', None)
+    ]
+
+class DoubleArgumentCommand(Command):
+    commands = [
+        ('log', None),
+        ('set', None),
+        ('area', 'a'),
+        ('root', None)
+    ]
+
 
 class Parser:
 
@@ -76,6 +110,9 @@ class Parser:
                 print('\nInvalid command:', command)
         else:
             print('\nInvalid command')
+
+
+
 
 
     def separate(self, text):

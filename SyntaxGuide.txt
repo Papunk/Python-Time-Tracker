@@ -28,8 +28,8 @@ Timer Commands
             If no arguments are provided, resets all timers.
     ex:     "reset timerName" or "reset"
 
-6.  show:   Show all timers. Takes no arguments.
-    ex:     "show"
+6.  show:   Show all timers or given areas.
+    ex:     "show" or "show areaName"
 
 7.  quit:   Saves timers and their status, then quits.
             Takes no arguments
