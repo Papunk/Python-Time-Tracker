@@ -11,16 +11,25 @@ Parsing technique:
     - call correct function
 '''  
 
+# TODO these classes should read the data from a file at runtime
+
 # commands
 class Command:
-    #TODO these classes should read the data from a file at runtime
-    pass
+    @ classmethod
+    def getKeywords(self):
+        pass
 
-class NoArgumentCommand(Command):
+    @ classmethod
+    def getShorthand(self):
+        pass
+
+
+class NoArgument(Command):
     commands = [
         ('quit', None),
         ('reset', None)
     ]
+
 
 class SingleArgument(Command):
     commands = [
@@ -31,7 +40,10 @@ class SingleArgument(Command):
         ('show', None)
     ]
 
-class DoubleArgumentCommand(Command):
+    
+        
+
+class DoubleArgument(Command):
     commands = [
         ('log', None),
         ('set', None),
