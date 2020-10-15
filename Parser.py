@@ -49,7 +49,7 @@ class Command:
     
 
     @ classmethod
-    def isCommand(self, text):
+    def getCommandType(self, text):
         '''
         Desc:
             Returns the type of the given command
