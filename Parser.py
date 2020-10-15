@@ -11,45 +11,46 @@ Parsing technique:
     - call correct function
 '''  
 
-# TODO these classes should read the data from a file at runtime
+class CommandType(Enum):
+    NULL = 0
+    ONE = 1
+    TWO = 2
 
-# commands
+
 class Command:
-    @ classmethod
-    def getKeywords(self):
-        pass
 
-    @ classmethod
-    def getShorthand(self):
-        pass
-
-
-class NoArgument(Command):
-    commands = [
-        ('quit', None),
-        ('reset', None)
-    ]
-
-
-class SingleArgument(Command):
-    commands = [
-        ('make', 'm'),
-        ('delete', 'd'),
-        ('start', 's'),
-        ('stop', 'x'),
-        ('show', None)
-    ]
-
+    keywords = {
+        CommandType.NULL: [
+            ('quit', None),
+            ('reset', None)
+        ],
+        CommandType.ONE: [
+            ('make', 'm'),
+            ('delete', 'd'),
+            ('start', 's'),
+            ('stop', 'x'),
+            ('show', None)
+        ],
+        CommandType.TWO: [
+            ('log', None),
+            ('set', None),
+            ('area', 'a'),
+            ('root', None)
+        ]
+    }
     
-        
 
-class DoubleArgument(Command):
-    commands = [
-        ('log', None),
-        ('set', None),
-        ('area', 'a'),
-        ('root', None)
-    ]
+    @ classmethod
+    def isCommand(self, text):
+        for cmdType, keyword in self.keywords.items():
+            for pair in keyword:
+                if text in pair:
+                    return cmdType;
+
+
+
+
+
 
 
 class Parser:
