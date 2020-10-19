@@ -66,6 +66,11 @@ class Command:
                     return cmdType
         return None # text was not a valid command
 
+    def parse(self, cmdType, text):
+        if cmdType == CommandType.NULL:
+            pass
+    
+
 
 
 
