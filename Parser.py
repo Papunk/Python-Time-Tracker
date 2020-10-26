@@ -69,12 +69,11 @@ class Command:
     def parse(self, cmdType, text):
         if cmdType == CommandType.NULL:
             pass
+        elif cmdType == CommandType.ONE:
+            pass
+        elif cmdType == CommandType.TWO:
+            pass
     
-
-
-
-
-
 
 
 class Parser:
