@@ -21,7 +21,7 @@ class CommandType(Enum):
     TWO = 2
 
 
-class Command:
+class cmd:
     '''
     Desc:
         This class manages command separation
@@ -66,6 +66,15 @@ class Command:
                     return cmdType
         return None # text was not a valid command
 
+
+# functions
+
+
+
+
+
+class Parser:
+
     def parse(self, cmdType, text):
         if cmdType == CommandType.NULL:
             pass
@@ -76,7 +85,9 @@ class Command:
     
 
 
-class Parser:
+
+
+
 
     class KeyWords(Enum):
         # turn this into a dictionary
@@ -109,7 +120,7 @@ class Parser:
         self.tm = tm
 
 
-    def parse(self, text):
+    def PARSE(self, text):
         '''sends the arguments to the various functions'''
         text = self.separate(text.strip())
         command = text['command']
