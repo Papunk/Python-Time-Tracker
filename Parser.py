@@ -67,7 +67,21 @@ class cmd:
         return None # text was not a valid command
 
 
-# functions
+class Command:
+
+    def __init__(self, cmdType, command, arguments):
+        '''
+        Desc:
+            This class represents a command
+        
+        Arguments:
+            cmdType (CommandType) - the type of command
+            command (string) - the actual command
+            arguments (list(string)) - the arguments to be used
+        '''
+        self.cmdType = cmdType
+        self.command = command
+        self.arguments = arguments
 
 
 
